@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>오늘운동 — 안 되는 동작이 없는 몸</title>
+<meta name="description" content="다이어트 약도, 정해진 '좋은 자세'도 아닙니다. 12년, 움직임을 보는 눈으로 어떤 동작이든 가능한 몸을 만듭니다. 오늘운동 체형교정·무브먼트 PT. 무료 체험 상담 신청." />
+<meta property="og:title" content="오늘운동 — 안 되는 동작이 없는 몸" />
+<meta property="og:description" content="정지된 '좋은 자세'가 아니라, 잘 움직이는 몸. 12년의 눈으로 움직임을 되찾는 체형교정 PT. 무료 체험 상담." />
+<meta property="og:type" content="website" />
+<style>
+  :root{
+    --bg:#100f12; --bg-soft:#17161b; --card:#1b1a20; --line:#2b2932;
+    --fg:#f3f1ee; --muted:#a3a0ab; --accent:#d98a3d; --accent-soft:#f0a45a;
+    --danger:#e06a5a; --max:660px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",Roboto,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  section{padding:72px 0}
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-soft);font-weight:700;margin-bottom:20px}
+  h2{font-size:clamp(25px,6.4vw,34px);font-weight:800;line-height:1.28;letter-spacing:-.015em;text-wrap:balance}
+  .lead{color:var(--muted);font-size:17px;margin-top:16px;max-width:30em}
+
+  /* HERO */
+  .hero{
+    min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+    background:
+      radial-gradient(130% 70% at 50% -10%, rgba(217,138,61,.16) 0%, transparent 55%),
+      var(--bg);
+    text-align:center;padding:96px 0 72px;position:relative;
+  }
+  .brand{font-size:14px;letter-spacing:.42em;font-weight:700;color:var(--muted);margin-bottom:38px}
+  .hero h1{font-size:clamp(38px,10.5vw,60px);line-height:1.12;font-weight:800;letter-spacing:-.03em;text-wrap:balance}
+  .hero h1 .em{color:var(--accent-soft)}
+  .hero p.sub{margin:28px auto 0;max-width:24em;color:var(--muted);font-size:17px}
+  .cta-row{margin-top:42px;display:flex;flex-direction:column;gap:12px;align-items:center}
+  .btn{
+    display:inline-block;width:100%;max-width:340px;text-align:center;
+    padding:18px 24px;border-radius:14px;font-weight:700;font-size:16px;text-decoration:none;
+    transition:transform .15s ease, filter .15s ease; cursor:pointer;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px}
+  .btn-primary{background:var(--accent);color:#1a1206;box-shadow:0 12px 36px -12px rgba(217,138,61,.75)}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  .scroll-hint{margin-top:46px;color:var(--muted);font-size:13px;letter-spacing:.05em}
+
+  /* MYTHS */
+  .myth{margin-top:30px;display:flex;flex-direction:column;gap:14px}
+  .myth-item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  .myth-item .q{font-weight:700;font-size:16px;display:flex;gap:10px;align-items:baseline}
+  .myth-item .q .x{color:var(--danger);font-weight:800;flex:none}
+  .myth-item .a{color:var(--muted);font-size:15px;margin-top:8px;display:flex;gap:10px;align-items:baseline}
+  .myth-item .a .o{color:var(--accent-soft);font-weight:800;flex:none}
+
+  /* PILLARS */
+  .pillars{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+  .pillar{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 24px;position:relative;overflow:hidden}
+  .pillar::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--accent),transparent)}
+  .pillar .tag{font-size:12px;font-weight:700;color:var(--accent-soft);letter-spacing:.12em;text-transform:uppercase}
+  .pillar h3{font-size:20px;font-weight:800;margin:12px 0 8px;letter-spacing:-.01em}
+  .pillar p{color:var(--muted);font-size:15px}
+
+  /* QUOTE */
+  .quote{background:linear-gradient(160deg,rgba(217,138,61,.10),var(--card));border:1px solid var(--line);border-radius:22px;padding:38px 28px;margin-top:26px}
+  .quote .mark{font-size:52px;line-height:.5;color:var(--accent);font-weight:800}
+  .quote p{font-size:20px;font-weight:600;margin-top:16px;line-height:1.5;letter-spacing:-.01em}
+  .quote .by{margin-top:20px;color:var(--muted);font-size:14px;line-height:1.5}
+
+  /* STATS */
+  .stats{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .stat{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;text-align:center}
+  .stat .big{font-size:32px;font-weight:800;color:var(--accent-soft);font-variant-numeric:tabular-nums}
+  .stat .lbl{color:var(--muted);font-size:13px;margin-top:8px}
+
+  /* OFFER */
+  .offer{background:var(--bg-soft)}
+  .offer-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:32px 26px;margin-top:28px}
+  .badge{display:inline-block;background:rgba(217,138,61,.16);color:var(--accent-soft);font-weight:700;font-size:12px;letter-spacing:.09em;padding:8px 13px;border-radius:999px}
+  .offer-card h3{font-size:23px;font-weight:800;margin:18px 0 6px;letter-spacing:-.01em}
+  .price{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px}
+  .price .amt{font-size:30px;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums}
+  .price .unit{color:var(--muted);font-size:14px}
+  .price .strike{color:var(--muted);text-decoration:line-through;font-size:16px}
+  .offer-card ul{list-style:none;margin:20px 0 0}
+  .offer-card li{padding:12px 0;border-top:1px solid var(--line);font-size:15px;display:flex;gap:12px;align-items:baseline}
+  .offer-card li:first-child{border-top:none}
+  .offer-card li .chk{color:var(--accent-soft);font-weight:800;flex:none}
+  .note{color:var(--muted);font-size:13px;margin-top:20px;text-align:center}
+
+  /* STEPS */
+  .steps{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+  .step{display:flex;gap:16px;align-items:flex-start;background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .step .n{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#1a1206;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .step .body{flex:1}
+  .step .body h4{font-size:16px;font-weight:800;margin-bottom:4px}
+  .step .body p{color:var(--muted);font-size:14px;margin-bottom:12px}
+  .step .btn{padding:14px 20px;font-size:15px;max-width:none}
+  .step-note{color:var(--muted);font-size:12px;margin-top:8px;text-align:center}
+
+  /* FINAL */
+  .final{text-align:center;background:radial-gradient(130% 80% at 50% 120%, rgba(217,138,61,.16) 0%, transparent 55%),var(--bg)}
+  .final h2{max-width:15em;margin:0 auto}
+
+  footer{border-top:1px solid var(--line);padding:38px 0 48px;text-align:center;color:var(--muted);font-size:13px}
+  .sns{display:flex;gap:20px;justify-content:center;margin-bottom:18px}
+  .sns a{color:var(--fg);text-decoration:none;font-weight:600;font-size:14px;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .sns a:hover{color:var(--accent-soft)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">오 늘 운 동</div>
+    <h1>안 되는 동작이<br>없는 <span class="em">몸</span>을 만듭니다</h1>
+    <p class="sub">다이어트 약도, 정해진 '좋은 자세'도 아닙니다.<br>어떤 움직임이든 가능한, 잘 움직이는 몸.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#offer">무료 체험 상담 신청</a>
+      <a class="btn btn-ghost" href="#why">왜 오늘운동인가</a>
+    </div>
+    <div class="scroll-hint">아래로 내려서 확인하세요 ↓</div>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap reveal">
+    <div class="kicker">흔한 착각</div>
+    <h2>당신이 들어온 '운동 상식',<br>대부분 반대로 알고 있습니다.</h2>
+    <p class="lead">유행과 지름길이 몸을 망칩니다. 12년간 현장에서 확인한 것들.</p>
+    <div class="myth">
+      <div class="myth-item">
+        <div class="q"><span class="x">✕</span><span>"살부터 빼고, 그다음에 근력운동 해야죠?"</span></div>
+        <div class="a"><span class="o">→</span><span>순서의 문제가 아닙니다. 잘 움직이는 몸을 만들면 체형과 근력은 함께 따라옵니다.</span></div>
+      </div>
+      <div class="myth-item">
+        <div class="q"><span class="x">✕</span><span>"위고비·마운자로로 빼면 평생 예뻐지겠죠?"</span></div>
+        <div class="a"><span class="o">→</span><span>약으로 뺀 살은 움직임을 남기지 않습니다. 몸을 쓰는 법을 배우지 않으면 되돌아옵니다.</span></div>
+      </div>
+      <div class="myth-item">
+        <div class="q"><span class="x">✕</span><span>"쫙 편 자세 / 특정 자세가 '좋은 자세'죠?"</span></div>
+        <div class="a"><span class="o">→</span><span>한쪽으로 치우친 정지 자세는 오히려 몸을 혼란스럽게 합니다. 좋은 자세는 '잘 움직이는 것'입니다.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg-soft)">
+  <div class="wrap reveal">
+    <div class="kicker">오늘운동의 방식</div>
+    <h2>영상으로는 절대<br>잡히지 않는 것.</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="tag">움직임을 보는 눈</div>
+        <h3>같은 동작, 다른 결과</h3>
+        <p>홈트 영상, 다른 PT·필라테스·요가에서 '똑같이' 따라 해도 결과가 다른 이유. 강도와 움직임의 질을 읽어내는 12년의 눈이 자세를 잡습니다.</p>
+      </div>
+      <div class="pillar">
+        <div class="tag">움직임의 자유</div>
+        <h3>안 되는 동작이 없게</h3>
+        <p>특정 자세를 '외우는' 운동이 아니라, 어떤 움직임이든 가능한 몸을 만드는 것. 이것이 모든 운동의 목표입니다.</p>
+      </div>
+      <div class="pillar">
+        <div class="tag">지름길 없이</div>
+        <h3>약도, 유행도 아닌 몸</h3>
+        <p>약과 유행하는 자세 이론에 흔들리지 않습니다. 스스로 잘 움직이는 몸은 평생 갑니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="kicker">실제 후기</div>
+    <h2>온 가족이<br>체형교정을 받고 갔습니다.</h2>
+    <div class="quote">
+      <div class="mark">"</div>
+      <p>이런 식으로 운동을 가르치는 곳이<br>많이 있었으면 좋겠습니다.</p>
+      <div class="by">— 해외 대사관 주재원 가족, 한국 방문 중 온 가족 체형교정 후 남긴 후기</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="big">12년+</div><div class="lbl">현장 지도 경력</div></div>
+      <div class="stat"><div class="big">3–6년</div><div class="lbl">장기 회원 다수</div></div>
+      <div class="stat"><div class="big">全가족</div><div class="lbl">부부·자녀 함께</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="offer" class="offer">
+  <div class="wrap reveal">
+    <div class="kicker">무료 체험 상담</div>
+    <h2>먼저, 무료 체험 상담부터.<br>당신 몸을 진단해 드립니다.</h2>
+    <p class="lead">결제부터 하지 마세요. 15분 체험 상담에서 지금 내 몸이 어떤 상태인지, 무엇부터 풀어야 하는지 먼저 확인하세요. 맞다고 느끼실 때 등록하시면 됩니다.</p>
+    <div class="offer-card">
+      <span class="badge">1기 · 선착순 6~8명</span>
+      <h3>움직임 리셋 프로그램</h3>
+      <p style="color:var(--muted);font-size:14px;margin-top:2px">4주 · 주 1회 60분 라이브(온라인) + 주간 과제·피드백</p>
+      <!-- 가격: 실제 금액으로 수정하세요 -->
+      <div class="price">
+        <span class="strike">정가 159,000원</span>
+        <span class="amt">99,000</span>
+        <span class="unit">원 · 1기 사전신청가</span>
+      </div>
+      <ul>
+        <li><span class="chk">✓</span><span>내 몸에 맞춘 움직임·체형 진단</span></li>
+        <li><span class="chk">✓</span><span>'안 되는 동작'을 없애는 단계별 루틴</span></li>
+        <li><span class="chk">✓</span><span>12년 노하우 기반 자세 피드백</span></li>
+        <li><span class="chk">✓</span><span>약·유행이 아닌, 평생 가는 몸의 원리</span></li>
+      </ul>
+
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <div class="body">
+            <h4>무료 체험 상담 신청 <span style="color:var(--accent-soft);font-weight:700">· 지금 여기</span></h4>
+            <p>이름·연락처·불편한 곳만 남겨주세요. (1분) 상담 일정은 신청 후 안내드립니다.</p>
+            <!-- 기본: 인스타 DM 접수(바로 작동). 구글폼 쓰려면 href를 https://forms.gle/... 로 변경 -->
+            <a class="btn btn-primary" href="https://ig.me/m/onlundong" target="_blank" rel="noopener">무료 체험 상담 신청하기 →</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div class="body">
+            <h4>상담 후, 마음에 들면 등록</h4>
+            <p>1기 참가를 원하시면 그때 결제로 확정하시면 됩니다. (상담 없이 바로 등록도 가능)</p>
+            <!-- 결제/예약금 링크가 준비되면 href를 토스·카카오페이 등 주소로 변경 -->
+            <a class="btn btn-ghost" href="https://ig.me/m/onlundong" target="_blank" rel="noopener">1기 등록 문의 →</a>
+          </div>
+        </div>
+      </div>
+      <div class="step-note">체험 상담은 무료입니다 · 신청은 인스타 DM으로 접수돼요.</div>
+
+      <div class="note">문의는 <a href="https://instagram.com/onlundong" target="_blank" rel="noopener" style="color:var(--accent-soft)">인스타그램 DM</a>으로 편하게 주세요.</div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap reveal">
+    <h2>오늘, 안 되는 동작을<br>하나씩 없애 봅시다.</h2>
+    <div class="cta-row" style="margin-top:36px">
+      <!-- 기본: 인스타 DM 접수. 구글폼 쓰려면 href 변경 -->
+      <a class="btn btn-primary" href="https://ig.me/m/onlundong" target="_blank" rel="noopener">무료 체험 상담 신청하기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="sns">
+      <a href="https://instagram.com/onlundong" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://youtube.com/@onlundong" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.threads.net/@onlundong" target="_blank" rel="noopener">Threads</a>
+    </div>
+    <div>© 오늘운동 (@onlundong) · 움직임의 자유를 만드는 체형교정 PT</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
