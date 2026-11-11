@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>오늘운동 움직임 진단</title>
+<meta name="description" content="오늘운동 움직임 자가 진단 — 8개 동작 테스트로 내 움직임을 점수화하고 리포트를 받아보세요. @onlundong" />
+</head>
+<body>
+<style>
+  :root{
+    --bg:#100f12; --bg-soft:#17161b; --card:#1b1a20; --line:#2b2932;
+    --fg:#f3f1ee; --muted:#a3a0ab; --accent:#d98a3d; --accent-soft:#f0a45a;
+    --danger:#e06a5a; --good:#5fb98a; --max:620px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--fg); min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",Roboto,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:24px 20px 56px}
+  .brand{font-size:12px;letter-spacing:.4em;font-weight:700;color:var(--muted);text-align:center;margin:8px 0 2px}
+  .masthead{text-align:center;color:var(--accent-soft);font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:22px}
+  .btn{display:inline-block;width:100%;text-align:center;padding:16px 22px;border-radius:13px;font-weight:700;font-size:16px;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:transform .12s ease, filter .12s ease}
+  .btn:active{transform:scale(.98)}
+  .btn:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px}
+  .btn-primary{background:var(--accent);color:#1a1206;box-shadow:0 10px 30px -12px rgba(217,138,61,.7)}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+
+  /* INTRO */
+  .intro{text-align:center;padding:40px 0 10px}
+  .intro h1{font-size:clamp(28px,8vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.18;text-wrap:balance}
+  .intro h1 .em{color:var(--accent-soft)}
+  .intro p{color:var(--muted);margin:18px auto 0;max-width:24em;font-size:16px}
+  .meta{display:flex;gap:10px;justify-content:center;margin:26px 0 30px;flex-wrap:wrap}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--muted)}
+  .chip b{color:var(--fg)}
+
+  /* PROGRESS */
+  .progress-wrap{position:sticky;top:0;background:linear-gradient(var(--bg),var(--bg) 70%,transparent);padding:14px 0 10px;z-index:5}
+  .progress-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-bottom:8px}
+  .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .35s ease}
+
+  /* QUESTION CARD */
+  .q-eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:12px}
+  .q-title{font-size:22px;font-weight:800;line-height:1.35;letter-spacing:-.01em;text-wrap:balance}
+  .q-help{color:var(--muted);font-size:14px;margin-top:10px}
+  .q-img{margin:16px 0 2px;font-size:40px;text-align:center}
+  .options{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+  .opt{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 16px;color:var(--fg);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;transition:border-color .12s,background .12s}
+  .opt:hover{border-color:#3d3b47}
+  .opt.sel{border-color:var(--accent);background:rgba(217,138,61,.1)}
+  .opt .dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--line)}
+  .opt.sel .dot{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--card)}
+  .txt-input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px;color:var(--fg);font-size:16px;font-family:inherit;margin-top:20px}
+  .txt-input:focus{outline:none;border-color:var(--accent)}
+  .nav{display:flex;gap:10px;margin-top:26px}
+  .nav .btn{flex:1}
+  .nav .btn.prev{flex:0 0 78px}
+
+  /* REPORT */
+  .report{animation:fade .5s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .r-head{text-align:center;padding:10px 0 4px}
+  .r-head .k{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-soft);font-weight:700}
+  .r-head h2{font-size:26px;font-weight:800;margin-top:8px;letter-spacing:-.01em}
+  .grade-card{background:linear-gradient(160deg,rgba(217,138,61,.12),var(--card));border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:20px;text-align:center}
+  .grade{font-size:64px;font-weight:800;line-height:1;color:var(--accent-soft)}
+  .grade-sub{color:var(--muted);font-size:14px;margin-top:10px}
+  .score-line{font-size:13px;color:var(--muted);margin-top:4px}
+  .radar-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 18px;margin-top:16px;text-align:center}
+  .radar-card h3{font-size:15px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:.02em}
+  .axes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .axis{background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-align:left}
+  .axis .nm{font-size:13px;color:var(--muted)}
+  .axis .vl{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:16px}
+  .block .tag{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+  .block.weak .tag{color:var(--danger)}
+  .block.strong .tag{color:var(--good)}
+  .block h4{font-size:19px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
+  .block p{color:var(--muted);font-size:14.5px}
+  .rx{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .rx li{display:flex;gap:10px;font-size:14.5px;color:var(--fg)}
+  .rx li::before{content:"→";color:var(--accent-soft);font-weight:800}
+  .flag{background:rgba(224,106,90,.1);border:1px solid rgba(224,106,90,.4);border-radius:14px;padding:16px 18px;margin-top:16px;font-size:14px;color:#f0b4a9}
+  .flag b{color:#fff}
+  .cta-card{background:linear-gradient(160deg,rgba(217,138,61,.14),var(--card));border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:22px;text-align:center}
+  .cta-card h3{font-size:20px;font-weight:800;letter-spacing:-.01em}
+  .cta-card p{color:var(--muted);font-size:14px;margin:10px 0 20px}
+  .disclaimer{color:#6f6c78;font-size:12px;line-height:1.6;margin-top:22px;text-align:center}
+  .restart{margin-top:14px}
+  .hidden{display:none !important}
+</style>
+
+<div class="wrap">
+  <div class="brand">오 늘 운 동</div>
+  <div class="masthead">MOVEMENT CHECK · 움직임 자가 진단</div>
+
+  <!-- INTRO -->
+  <section id="intro" class="intro">
+    <h1>당신 몸의<br><span class="em">'안 되는 동작'</span>을<br>찾아 드립니다</h1>
+    <p>8개의 간단한 자가 동작 테스트로 내 움직임 상태를 점수화하고, 무엇부터 풀어야 하는지 리포트로 확인하세요.</p>
+    <div class="meta">
+      <div class="chip">⏱ <b>약 3분</b></div>
+      <div class="chip">📋 <b>8개 동작</b></div>
+      <div class="chip">📊 즉시 <b>리포트</b></div>
+    </div>
+    <button class="btn btn-primary" onclick="start()">진단 시작하기</button>
+    <p style="font-size:12px;margin-top:16px">움직이기 어려운 자세는 무리하지 말고, 평소 느낌으로 선택하세요.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-top"><span id="pstep">1 / 10</span><span id="psec">기본 정보</span></div>
+      <div class="bar"><i id="pbar"></i></div>
+    </div>
+    <div id="qcard"></div>
+    <div class="nav">
+      <button class="btn btn-ghost prev" onclick="prev()" id="prevBtn">이전</button>
+      <button class="btn btn-primary" onclick="next()" id="nextBtn">다음</button>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="report" class="hidden report"></section>
+</div>
+
+<script>
+// ---------- 문항 정의 ----------
+const AX = {lower:"하체 가동성", upper:"상체 가동성", core:"안정성·코어", balance:"균형"};
+const Q = [
+  {id:"name", sec:"기본 정보", type:"text", title:"이름(또는 닉네임)을 알려주세요", help:"리포트에 표시됩니다. 건너뛰어도 됩니다.", optional:true},
+  {id:"goal", sec:"기본 정보", type:"choice", title:"가장 원하는 것은?", opts:[["체형·자세 교정","shape"],["통증·불편함 개선","pain"],["근력·움직임 향상","perf"],["다이어트","diet"]]},
+  {id:"age", sec:"기본 정보", type:"choice", title:"연령대는?", opts:[["20대","20"],["30대","30"],["40대","40"],["50대 이상","50"]]},
+
+  {id:"m1", sec:"하체 가동성", axis:"lower", type:"choice", emoji:"🏋️", title:"뒤꿈치를 들지 않고 끝까지 쭈그려 앉을 수 있나요?", help:"풀 스쿼트 자세", opts:[["전혀 안 된다",0],["중간까지만",1],["거의 되지만 불편",2],["편하게 완전히",3]]},
+  {id:"m2", sec:"하체 가동성", axis:"lower", type:"choice", emoji:"🙇", title:"무릎을 편 채 상체를 숙이면 손이 어디까지 닿나요?", help:"전굴 테스트", opts:[["정강이 위",0],["발목 근처",1],["발끝",2],["손바닥이 바닥에",3]]},
+
+  {id:"u1", sec:"상체 가동성", axis:"upper", type:"choice", emoji:"🙆", title:"벽에 등·엉덩이를 붙이고 양팔을 머리 위로 완전히 올릴 수 있나요?", help:"만세 테스트", opts:[["많이 뜬다",0],["조금 뜬다",1],["거의 닿는다",2],["완전히 닿는다",3]]},
+  {id:"u2", sec:"상체 가동성", axis:"upper", type:"choice", emoji:"🤝", title:"등 뒤로 양손을 맞잡을 수 있나요? (어려운 쪽 기준)", help:"뒷짐 테스트", opts:[["전혀 안 닿음",0],["한 뼘 이상 벌어짐",1],["손끝이 거의 닿음",2],["맞잡을 수 있음",3]]},
+
+  {id:"s1", sec:"안정성·코어", axis:"core", type:"choice", emoji:"🧱", title:"플랭크를 바른 자세로 얼마나 유지하나요?", opts:[["10초 미만",0],["10~30초",1],["30~60초",2],["60초 이상",3]]},
+  {id:"s2", sec:"안정성·코어", axis:"core", type:"choice", emoji:"🙈", title:"눈을 감고 한 발로 몇 초 서 있을 수 있나요?", opts:[["5초 미만",0],["5~10초",1],["10~20초",2],["20초 이상",3]]},
+
+  {id:"b1", sec:"균형", axis:"balance", type:"choice", emoji:"🦩", title:"눈을 뜨고 한 발 서기 30초가 가능한가요?", opts:[["5초 내 실패",0],["10~20초",1],["30초 간신히",2],["안정적으로 30초+",3]]},
+  {id:"b2", sec:"균형", axis:"balance", type:"choice", emoji:"🚶", title:"발뒤꿈치-발끝을 붙여 일직선으로 10걸음 걷기는?", opts:[["자주 벗어난다",0],["가끔 흔들린다",1],["거의 안정적",2],["완벽하게",3]]},
+
+  {id:"pain", sec:"마무리", type:"choice", emoji:"⚠️", title:"운동할 때 통증이 있는 부위가 있나요?", opts:[["없다",0],["가끔 뻐근함",1],["특정 부위 통증 있음",2]]},
+  {id:"asym", sec:"마무리", type:"choice", emoji:"⚖️", title:"좌우 중 한쪽만 유독 불편하거나 약한가요?", opts:[["아니다",0],["약간 그렇다",1],["뚜렷하게 그렇다",2]]},
+];
+
+let step = 0;
+const ans = {};
+
+function start(){ document.getElementById('intro').classList.add('hidden'); document.getElementById('quiz').classList.remove('hidden'); step=0; render(); window.scrollTo(0,0);}
+function render(){
+  const q = Q[step];
+  document.getElementById('pstep').textContent = (step+1)+' / '+Q.length;
+  document.getElementById('psec').textContent = q.sec;
+  document.getElementById('pbar').style.width = ((step)/(Q.length))*100+'%';
+  let html = `<div class="q-eyebrow">${q.sec}</div>`;
+  if(q.emoji) html += `<div class="q-img">${q.emoji}</div>`;
+  html += `<div class="q-title">${q.title}</div>`;
+  if(q.help) html += `<div class="q-help">${q.help}</div>`;
+  if(q.type==='text'){
+    html += `<input class="txt-input" id="tin" placeholder="예: 오늘운동" value="${ans[q.id]||''}" maxlength="20" oninput="ans['${q.id}']=this.value">`;
+  } else {
+    html += `<div class="options">`;
+    q.opts.forEach((o,i)=>{
+      const sel = ans[q.id]===o[1] ? ' sel':'';
+      html += `<button class="opt${sel}" onclick="pick('${q.id}',${JSON.stringify(o[1])},this)"><span class="dot"></span><span>${o[0]}</span></button>`;
+    });
+    html += `</div>`;
+  }
+  document.getElementById('qcard').innerHTML = html;
+  document.getElementById('prevBtn').style.visibility = step===0?'hidden':'visible';
+  const last = step===Q.length-1;
+  document.getElementById('nextBtn').textContent = last?'결과 보기 →':'다음';
+  updateNext();
+}
+function pick(id,val,el){
+  ans[id]=val;
+  [...el.parentNode.children].forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  updateNext();
+  setTimeout(()=>{ if(step<Q.length-1){ next(); } }, 220);
+}
+function updateNext(){
+  const q=Q[step];
+  const ok = q.optional || q.type==='text' || ans[q.id]!==undefined;
+  document.getElementById('nextBtn').disabled = !ok;
+}
+function next(){ if(document.getElementById('nextBtn').disabled) return; if(step<Q.length-1){ step++; render(); window.scrollTo(0,0);} else { finish(); } }
+function prev(){ if(step>0){ step--; render(); window.scrollTo(0,0);} }
+
+// ---------- 리포트 ----------
+function finish(){
+  const sc = {
+    lower: (ans.m1+ans.m2)/6*100,
+    upper: (ans.u1+ans.u2)/6*100,
+    core:  (ans.s1+ans.s2)/6*100,
+    balance:(ans.b1+ans.b2)/6*100,
+  };
+  const overall = Math.round((sc.lower+sc.upper+sc.core+sc.balance)/4);
+  const grade = overall>=85?'A':overall>=70?'B':overall>=55?'C':overall>=40?'D':'F';
+  const gradeMsg = {A:"움직임 기반이 탄탄해요.",B:"대체로 좋지만 보완할 영역이 있어요.",C:"막힌 곳이 몇 군데 보여요. 지금이 바로잡을 때.",D:"움직임 제한이 꽤 있어요. 교정이 필요해요.",F:"기본 움직임부터 다시 쌓는 게 좋겠어요."}[grade];
+  const keys = Object.keys(sc);
+  const weak = keys.reduce((a,b)=>sc[a]<=sc[b]?a:b);
+  const strong = keys.reduce((a,b)=>sc[a]>=sc[b]?a:b);
+
+  const weakInfo = {
+    lower:{bad:"깊이 앉기·계단·쪼그려 앉는 동작", why:"고관절·발목 가동이 막히면 그 부담을 허리가 대신 받습니다.", rx:["발목·고관절 모빌리티 드릴","스쿼트 패턴 재학습","종아리·내전근 이완"]},
+    upper:{bad:"만세·뒤로 손 뻗기·바른 자세 유지", why:"흉추가 굳으면 어깨와 목이 과하게 일하며 뻐근함이 쌓입니다.", rx:["흉추 신전·회전 모빌리티","어깨 가동 드릴","라운드숄더 교정 루틴"]},
+    core:{bad:"한 다리 동작·물건 들기·중심 잡기", why:"코어 안정성이 약하면 허리로 버티게 되어 통증 위험이 커집니다.", rx:["호흡-복압(브레이싱)","데드버그·플랭크 계열","엉덩이 활성화"]},
+    balance:{bad:"한 발 동작·방향 전환·계단 내려오기", why:"발바닥 감각과 고관절 안정이 부족하면 넘어짐·삐끗 위험이 큽니다.", rx:["밸런스·고유수용 훈련","발 내재근 강화","한 다리 안정화 패턴"]},
+  }[weak];
+  const strongMsg = {lower:"하체 가동성",upper:"상체 가동성",core:"안정성·코어",balance:"균형"}[strong];
+
+  const name = (ans.name&&ans.name.trim())? ans.name.trim()+'님' : '당신';
+  const painFlag = ans.pain===2;
+  const asymFlag = ans.asym===2 || ans.asym===1;
+
+  let flagHtml='';
+  if(painFlag || asymFlag){
+    flagHtml = `<div class="flag">⚠ <b>주의가 필요해요.</b> ${painFlag?'통증이 있는 상태':''}${painFlag&&asymFlag?' + ':''}${asymFlag?'좌우 불균형':''}은(는) 자가 운동만으로 악화될 수 있어요. 무리한 동작 전에 <b>전문가 확인</b>을 권장합니다.</div>`;
+  }
+
+  const r = document.getElementById('report');
+  r.innerHTML = `
+    <div class="r-head"><div class="k">MOVEMENT REPORT</div><h2>${name}의 움직임 리포트</h2></div>
+    <div class="grade-card">
+      <div class="grade">${grade}</div>
+      <div class="grade-sub">${gradeMsg}</div>
+      <div class="score-line">종합 움직임 점수 ${overall}/100</div>
+    </div>
+    <div class="radar-card">
+      <h3>4대 움직임 역량</h3>
+      ${radarSVG([sc.lower,sc.upper,sc.core,sc.balance])}
+      <div class="axes">
+        <div class="axis"><div class="nm">하체 가동성</div><div class="vl">${Math.round(sc.lower)}</div></div>
+        <div class="axis"><div class="nm">상체 가동성</div><div class="vl">${Math.round(sc.upper)}</div></div>
+        <div class="axis"><div class="nm">안정성·코어</div><div class="vl">${Math.round(sc.core)}</div></div>
+        <div class="axis"><div class="nm">균형</div><div class="vl">${Math.round(sc.balance)}</div></div>
+      </div>
+    </div>
+    <div class="block weak">
+      <div class="tag">가장 먼저 풀어야 할 곳 · ${AX[weak]}</div>
+      <h4>그래서 "${weakInfo.bad}"이 안 됩니다</h4>
+      <p>${weakInfo.why}</p>
+      <ul class="rx">${weakInfo.rx.map(x=>`<li>${x}</li>`).join('')}</ul>
+    </div>
+    <div class="block strong">
+      <div class="tag">당신의 강점 · ${strongMsg}</div>
+      <h4>이 영역은 잘 쓰고 있어요</h4>
+      <p>강점을 활용하면 약한 영역의 회복도 빨라집니다. 이 균형을 맞추는 게 핵심이에요.</p>
+    </div>
+    ${flagHtml}
+    <div class="cta-card">
+      <h3>이 리포트, 혼자 두지 마세요</h3>
+      <p>화면은 '어디가 막혔는지'까지만 알려줍니다. 실제로 그 동작을 풀어주는 건 12년의 눈으로 보는 1:1 교정이에요. <b>무료 체험 상담</b>에서 이 결과를 바탕으로 정확히 봐드릴게요.</p>
+      <a class="btn btn-primary" href="https://ig.me/m/onlundong" target="_blank" rel="noopener">무료 체험 상담 신청하기 →</a>
+    </div>
+    <div class="disclaimer">※ 본 결과는 의료적 진단이 아닌 움직임 자가 스크리닝입니다. 통증이 있다면 전문가·의료기관의 평가를 우선하세요. · 오늘운동(@onlundong)</div>
+    <button class="btn btn-ghost restart" onclick="location.reload()">다시 진단하기</button>
+  `;
+  document.getElementById('quiz').classList.add('hidden');
+  r.classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+function radarSVG(vals){
+  // 4축: 상(하체), 우(상체), 하(코어), 좌(균형)
+  const S=240, c=S/2, R=88;
+  const dirs=[[0,-1],[1,0],[0,1],[-1,0]];
+  const rings=[0.25,0.5,0.75,1].map(f=>{
+    const pts=dirs.map(d=>`${c+d[0]*R*f},${c+d[1]*R*f}`).join(' ');
+    return `<polygon points="${pts}" fill="none" stroke="#2b2932" stroke-width="1"/>`;
+  }).join('');
+  const axes=dirs.map(d=>`<line x1="${c}" y1="${c}" x2="${c+d[0]*R}" y2="${c+d[1]*R}" stroke="#2b2932" stroke-width="1"/>`).join('');
+  const dpts=dirs.map((d,i)=>{const f=Math.max(vals[i],4)/100;return `${c+d[0]*R*f},${c+d[1]*R*f}`}).join(' ');
+  const dots=dirs.map((d,i)=>{const f=Math.max(vals[i],4)/100;return `<circle cx="${c+d[0]*R*f}" cy="${c+d[1]*R*f}" r="3.5" fill="#f0a45a"/>`}).join('');
+  const labels=[['하체',c,c-R-12],['상체',c+R+2,c-4,'start'],['코어',c,c+R+20],['균형',c-R-2,c-4,'end']]
+    .map(l=>`<text x="${l[1]}" y="${l[2]}" fill="#a3a0ab" font-size="12" text-anchor="${l[3]||'middle'}">${l[0]}</text>`).join('');
+  return `<svg viewBox="0 0 ${S} ${S}" width="100%" style="max-width:300px" role="img" aria-label="움직임 역량 레이더 차트">
+    ${rings}${axes}
+    <polygon points="${dpts}" fill="rgba(217,138,61,.28)" stroke="#d98a3d" stroke-width="2"/>
+    ${dots}${labels}
+  </svg>`;
+}
+</script>
+
+</body>
+</html>
